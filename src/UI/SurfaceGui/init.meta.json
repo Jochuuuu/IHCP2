@@ -1,0 +1,11 @@
+{
+  "className": "SurfaceGui",
+  "properties": {
+    "CanvasSize": [1500, 1500],
+    "ClipsDescendants": true,
+    "MaxDistance": 1000,
+    "PixelsPerStud": 200,
+    "SizingMode": "PixelsPerStud",
+    "ZIndexBehavior": "Sibling"
+  }
+}

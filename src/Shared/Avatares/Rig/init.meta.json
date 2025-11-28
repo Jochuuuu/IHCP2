@@ -1,0 +1,14 @@
+{
+  "className": "Model",
+  "properties": {
+    "Attributes": {
+      "RBX_AvatarPreviewer_stage": "CheckBody",
+      "RBX_AvatarPreviewer_AutoSetupValidationResultReported": false,
+      "RBX_AvatarPreviewer_shouldReimport": false,
+      "RBX_AvatarPreviewer_initialImportComplete": true,
+      "RBX_AvatarPreviewer_completedAutoSetupSurvey": false,
+      "RBX_AvatarPreviewer_equippedItems": "[{\"palette\":\"Eyelashes\",\"item\":{\"source\":\"instance\",\"key\":\"{123dcced-a550-4cc5-b3a7-5e1a6b375419}\"}},{\"palette\":\"Eyebrows\",\"item\":{\"source\":\"instance\",\"key\":\"{85a209bf-339a-4ccf-8957-0fee558a8f3d}\"}},{\"palette\":\"Hair\",\"item\":{\"source\":\"instance\",\"key\":\"{bbbac515-4fb8-4124-9164-ab13b87ca29d}\"}},{\"palette\":\"TShirts\",\"item\":{\"source\":\"instance\",\"key\":\"{dff0bab7-6415-4586-b14f-61176c45cddc}\"}},{\"palette\":\"Shirts\",\"item\":{\"source\":\"builtin\",\"builtinItem\":7178740556}},{\"palette\":\"Movement\",\"item\":{\"source\":\"builtin\",\"builtinItem\":16562329379}}]",
+      "RBX_AvatarPreviewer_textured": true
+    }
+  }
+}

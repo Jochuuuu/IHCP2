@@ -1,0 +1,12 @@
+{
+  "className": "Sky",
+  "properties": {
+    "SkyboxBk": "http://www.roblox.com/asset/?id=150335574",
+    "SkyboxDn": "http://www.roblox.com/asset/?id=150335585",
+    "SkyboxFt": "http://www.roblox.com/asset/?id=150335628",
+    "SkyboxLf": "http://www.roblox.com/asset/?id=150335620",
+    "SkyboxRt": "http://www.roblox.com/asset/?id=150335610",
+    "SkyboxUp": "http://www.roblox.com/asset/?id=150335642",
+    "StarCount": 1334
+  }
+}

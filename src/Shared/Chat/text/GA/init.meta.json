@@ -1,0 +1,7 @@
+{
+  "className": "SurfaceGui",
+  "properties": {
+    "CanvasSize": [110, 85],
+    "PixelsPerStud": 113.6364
+  }
+}

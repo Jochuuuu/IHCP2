@@ -1,0 +1,9 @@
+{
+  "className": "Sound",
+  "properties": {
+    "RollOffMaxDistance": 150,
+    "RollOffMinDistance": 5,
+    "SoundId": "rbxasset://sounds/uuhhh.mp3",
+    "Volume": 0.65
+  }
+}

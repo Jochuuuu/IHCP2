@@ -1,0 +1,13 @@
+{
+  "className": "MeshPart",
+  "properties": {
+    "CFrame": [274.8553, 34.7889, -117.6655, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+    "CanCollide": false,
+    "Color": [17, 17, 17],
+    "InitialSize": [1.4137, 1.5445, 1.3149],
+    "Locked": true,
+    "MeshContent": "rbxassetid://130005705900861",
+    "PivotOffset": [-0.0026, -2.6682, 0.144, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+    "Size": [1.7891, 1.9545, 1.664]
+  }
+}

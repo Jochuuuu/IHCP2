@@ -1,0 +1,24 @@
+{
+  "className": "TextButton",
+  "properties": {
+    "AnchorPoint": [0.5, 0.5],
+    "BackgroundColor3": [0.6, 0.6, 0.6],
+    "BackgroundTransparency": 0.65,
+    "BorderColor3": [0, 0, 0],
+    "BorderSizePixel": 0,
+    "FontFace": {
+      "family": "rbxassetid://12187367666",
+      "weight": "Bold",
+      "style": "Normal",
+      "cachedFaceId": null
+    },
+    "Position": [[0.435, 0.0], [0.92, 0.0]],
+    "Size": [[0.15, 0.0], [0.1, 0.0]],
+    "Text": "IMPRIMIR",
+    "TextColor3": [1, 1, 1],
+    "TextScaled": true,
+    "TextSize": 14,
+    "TextWrapped": true,
+    "Visible": false
+  }
+}

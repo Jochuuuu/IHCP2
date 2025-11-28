@@ -1,0 +1,10 @@
+{
+  "className": "Sound",
+  "properties": {
+    "Looped": true,
+    "RollOffMaxDistance": 150,
+    "RollOffMinDistance": 5,
+    "SoundId": "rbxasset://sounds/action_falling.mp3",
+    "Volume": 0.65
+  }
+}

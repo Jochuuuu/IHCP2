@@ -1,0 +1,8 @@
+{
+  "className": "Part",
+  "properties": {
+    "CFrame": [-2.8, 2.1815, -11.5, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+    "Size": [2, 2, 1],
+    "Transparency": 1
+  }
+}

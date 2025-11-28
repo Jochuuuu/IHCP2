@@ -1,0 +1,11 @@
+{
+  "className": "SurfaceGui",
+  "properties": {
+    "AlwaysOnTop": true,
+    "ClipsDescendants": true,
+    "LightInfluence": 1,
+    "MaxDistance": 1000,
+    "PixelsPerStud": 200,
+    "ZIndexBehavior": "Sibling"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "className": "WrapTarget",
+  "properties": {
+    "CageMeshContent": "https://assetdelivery.roblox.com/v1/asset/?id=12733724062",
+    "CageOrigin": [0.002, -0.0309, -0.0062, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+    "ImportOrigin": [0.3287, 3.231, 0.0434, 1, 0, 0, 0, 1, 0, 0, 0, 1]
+  }
+}

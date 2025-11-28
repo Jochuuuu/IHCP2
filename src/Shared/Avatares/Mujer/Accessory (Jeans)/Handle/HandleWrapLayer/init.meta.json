@@ -1,0 +1,10 @@
+{
+  "className": "WrapLayer",
+  "properties": {
+    "CageMeshContent": "rbxassetid://116806532878917",
+    "CageOrigin": [-0.0199, 1.1656, -0.0066, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+    "ImportOrigin": [0, 0.2435, 0.0199, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+    "ReferenceMeshContent": "rbxassetid://139971155920383",
+    "ReferenceOrigin": [-0.0199, 1.1656, -0.0808, 1, 0, 0, 0, 1, 0, 0, 0, 1]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "className": "Part",
+  "properties": {
+    "AudioCanCollide": false,
+    "CFrame": [288.9521, 33.5959, -117.6962, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+    "Size": [2.7, 2.8, 1.3],
+    "Transparency": 1
+  }
+}

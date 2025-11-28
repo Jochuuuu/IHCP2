@@ -1,0 +1,11 @@
+{
+  "className": "Humanoid",
+  "properties": {
+    "DisplayDistanceType": "None",
+    "DisplayName": "BlockyBlaze",
+    "HipHeight": 2.117,
+    "JumpPower": 50.145,
+    "RigType": "R15",
+    "UseJumpPower": false
+  }
+}

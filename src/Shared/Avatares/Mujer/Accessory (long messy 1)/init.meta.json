@@ -1,0 +1,7 @@
+{
+  "className": "Accessory",
+  "properties": {
+    "AccessoryType": "Hair",
+    "AttachmentPoint": [0, 1.263, -0.1493, 1, 0, 0, 0, 1, 0, 0, 0, 1]
+  }
+}

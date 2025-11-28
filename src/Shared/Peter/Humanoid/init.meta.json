@@ -1,0 +1,10 @@
+{
+  "className": "Humanoid",
+  "properties": {
+    "DisplayDistanceType": "None",
+    "DisplayName": "DaliElTravieso",
+    "HipHeight": 1.5688,
+    "RigType": "R15",
+    "UseJumpPower": false
+  }
+}

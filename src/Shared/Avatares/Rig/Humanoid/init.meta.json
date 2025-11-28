@@ -1,0 +1,9 @@
+{
+  "className": "Humanoid",
+  "properties": {
+    "DisplayDistanceType": "None",
+    "HipHeight": 3.1661,
+    "RigType": "R15",
+    "WalkSpeed": 10
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "className": "MeshPart",
+  "properties": {
+    "Attributes": {
+      "RBXRefinementScale": {
+        "Vector3": [1.0, 1.0, 1.0]
+      }
+    },
+    "CFrame": [47.5139, 4.646, 1.3451, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+    "CanCollide": false,
+    "InitialSize": [2.0242, 3.3225, 1.6043],
+    "MeshContent": "rbxassetid://122372094632340",
+    "Size": [1.6279, 2.6947, 1.2902],
+    "TextureContent": "rbxassetid://18682639025"
+  }
+}

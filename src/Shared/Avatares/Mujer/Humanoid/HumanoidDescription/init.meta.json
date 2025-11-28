@@ -1,0 +1,13 @@
+{
+  "className": "HumanoidDescription",
+  "properties": {
+    "BodyTypeScale": 0.39,
+    "DepthScale": 0.91,
+    "HeadScale": 0.95,
+    "HeightScale": 0.918,
+    "Pants": 10780156984,
+    "ProportionScale": 0.61,
+    "Shirt": 6926299523,
+    "WidthScale": 0.766
+  }
+}

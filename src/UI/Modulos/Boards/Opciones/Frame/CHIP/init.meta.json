@@ -1,0 +1,23 @@
+{
+  "className": "TextButton",
+  "properties": {
+    "AnchorPoint": [0.5, 0.5],
+    "BackgroundColor3": [0.1255, 0.6196, 0.1725],
+    "BackgroundTransparency": 0.65,
+    "BorderColor3": [0, 0, 0],
+    "BorderSizePixel": 0,
+    "FontFace": {
+      "family": "rbxassetid://12187366475",
+      "weight": "Bold",
+      "style": "Normal",
+      "cachedFaceId": null
+    },
+    "Position": [[0.2, 0.0], [0.5, 0.0]],
+    "Size": [[0.26, 0.0], [0.5, 0.0]],
+    "Text": "CHIP",
+    "TextColor3": [0.5569, 1, 0.6235],
+    "TextScaled": true,
+    "TextSize": 14,
+    "TextWrapped": true
+  }
+}

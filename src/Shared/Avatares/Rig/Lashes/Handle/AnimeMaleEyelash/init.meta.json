@@ -1,0 +1,11 @@
+{
+  "className": "WrapLayer",
+  "properties": {
+    "CageMeshContent": "https://assetdelivery.roblox.com/v1/asset/?id=11599410681",
+    "CageOrigin": [0, -2.5793, 0.2915, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+    "ImportOrigin": [0, 0.2325, 0.0083, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+    "Puffiness": 0,
+    "ReferenceMeshContent": "https://assetdelivery.roblox.com/v1/asset/?id=11599410679",
+    "ReferenceOrigin": [0, -2.5793, 0.2915, 1, 0, 0, 0, 1, 0, 0, 0, 1]
+  }
+}

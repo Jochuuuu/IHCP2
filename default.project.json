@@ -1,0 +1,35 @@
+{
+  "name": "P2XD",
+  "tree": {
+    "$className": "DataModel",
+    "Lighting": {
+      "$path": "src/Lighting"
+    },
+    "ReplicatedStorage": {
+      "$path": "src/Shared"
+    },
+    "ServerScriptService": {
+      "$path": "src/Server"
+    },
+    "ServerStorage": {
+      "$path": "src/ServerStorage"
+    },
+    "SoundService": {
+      "$path": "src/Sounds"
+    },
+    "StarterGui": {
+      "$path": "src/UI"
+    },
+    "StarterPlayer": {
+      "StarterCharacterScripts": {
+        "$path": "src/CharacterScripts"
+      },
+      "StarterPlayerScripts": {
+        "$path": "src/Client"
+      }
+    },
+    "Workspace": {
+      "$path": "src/Workspace"
+    }
+  }
+}

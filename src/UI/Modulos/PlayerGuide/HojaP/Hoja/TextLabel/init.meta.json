@@ -1,0 +1,23 @@
+{
+  "className": "TextLabel",
+  "properties": {
+    "AnchorPoint": [0, 0.5],
+    "BackgroundColor3": [1, 1, 1],
+    "BackgroundTransparency": 1,
+    "BorderColor3": [0, 0, 0],
+    "BorderSizePixel": 0,
+    "FontFace": {
+      "family": "rbxassetid://11322590111",
+      "weight": "Bold",
+      "style": "Normal",
+      "cachedFaceId": null
+    },
+    "Position": [[0.2503, 0.0], [0.1231, 0.0]],
+    "Size": [[0.4972, 0.0], [0.103, 0.0]],
+    "Text": "INFORME",
+    "TextColor3": [0, 0, 0],
+    "TextScaled": true,
+    "TextSize": 14,
+    "TextWrapped": true
+  }
+}
