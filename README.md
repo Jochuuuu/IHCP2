@@ -1,7 +1,4 @@
-# 🏥 Sistema de Gestión Hospitalaria VR -  
-
-> Proyecto Universitario - Interacción Humano-Computadora (IHC)  
-> Universidad de Ingeniería y Tecnología (UTEC)
+# 🏥 Sistema de Gestión Hospitalaria VR
 
 Sistema interactivo de gestión hospitalaria desarrollado en **Roblox VR** para simular procesos de atención médica, gestión de pacientes y flujos de trabajo hospitalarios.
 
@@ -39,14 +36,24 @@ src/
 
 ## 🚀 Instalación y Configuración
 
-### Requisitos Previos
+### ⚡ Opción Rápida - Descargar Proyecto Completo
+
+**¿Solo quieres probar el proyecto sin configurar nada?**
+
+1. **Descarga el archivo `.rbxl`** desde [Releases](../../releases)
+2. **Abre el archivo** con Roblox Studio
+3. **¡Listo para jugar!** - Todo está integrado y funcional
+
+### 🛠️ Opción Avanzada - Desarrollo con Argon
+
+#### Requisitos Previos
 
 - [Roblox Studio](https://www.roblox.com/create)
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Argon CLI](https://argon.wiki/)
 - Git
 
-### Configuración Rápida
+#### Configuración Paso a Paso
 
 1. **Clona el repositorio**
 ```bash
@@ -98,22 +105,6 @@ argon stop --all
 - Navegación VR con teleportación
 - Manipulación de objetos médicos
 - Interfaz adaptativa según contexto
-
-## 🎮 Controles VR
-
-| Acción | Control |
-|--------|---------|
-| Movimiento | Joystick izquierdo |
-| Girar vista | Joystick derecho |
-| Agarrar objetos | Grip/Gatillo |
-| Interactuar | Botón A/X |
-| Menú | Botón B/Y |
-
-## 👥 Equipo
-
-- **Desarrollador Principal**: [Jos](https://github.com/Jochuuuu)
-- **Curso**: Interacción Humano-Computadora
-- **Universidad**: UTEC
 
 ## 📄 Licencia
 
