@@ -105,6 +105,11 @@ end
 ]]
 function PathfindingModule.MoveTo(character, destination, timeToReach)
 	-- Validar que el personaje existe
+	
+	if destination:IsA("Folder") then
+		print("soy waypoints manuales esta numero del 1 al #children")
+	end
+	
 	local bloque_nombre = destination.Name
 	destination = destination.Position
 	if not character or not character:FindFirstChild("Humanoid") or not character:FindFirstChild("HumanoidRootPart") then

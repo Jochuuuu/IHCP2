@@ -20,8 +20,7 @@ local function desparecer_opciones()
 
 	main.Botones:TweenPosition(UDim2.new(-1,0,
 		.7,0),Enum.EasingDirection.Out,Enum.EasingStyle.Quad,.35,true)
-
-	task.wait(.45)
+ 	task.wait(.45)
 
 	main.TextLabel:TweenPosition(UDim2.new(0.5,0,
 		-.5,0),Enum.EasingDirection.Out,Enum.EasingStyle.Quad,.35,true)
@@ -63,8 +62,7 @@ local function desaparecer()
 
 	script.Parent.Visible = false
 
-
-end
+ end
 
 startedgame.Changed:Connect(function()
 	script.Parent.Visible = not (startedgame.Value)
@@ -89,12 +87,15 @@ local function guiasalir()
 
 	tutoframe.Salir:TweenPosition(UDim2.new(-1,0,0,0),
 		Enum.EasingDirection.In,Enum.EasingStyle.Linear,.29)
+	
+	 
+	
 end
-
-
 
 guiasalir()
 
+
+ 
 guia.Activated:Connect(function()
 	if not db then return end
 	db = false
@@ -174,7 +175,9 @@ inicio.Activated:Connect(function()
 	StartEvent:FireServer()
 
 end)
-
-desparecer_opciones()
-task.wait(.35)
-aparecer_opciones()
+ desparecer_opciones()
+ task.wait(.35)
+ aparecer_opciones()
+ 
+ 
+ 

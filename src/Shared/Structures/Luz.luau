@@ -12,8 +12,7 @@ function LuzPart.new(part,encendido)
 	self.Beam = self.Part and self.Part:FindFirstChildWhichIsA("Beam")
 	self.SurfaceLight = part:FindFirstChildWhichIsA("SurfaceLight")
 	self.PointLight = part:FindFirstChildWhichIsA("PointLight")
-
-	-- Estado interno
+ 	-- Estado interno
 	if encendido then
 		self:Encender()
 	else 

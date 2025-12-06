@@ -13,7 +13,7 @@ local RemoteEvent = ReplicatedStorage:WaitForChild("MoveObjectEvent")
 local HAND = Enum.UserCFrame.RightHand
 
 -- Distance threshold for grabbing
-local GRAB_DISTANCE = 2
+local GRAB_DISTANCE = 3.2
 
 -- Update rate configuration
 local UPDATE_RATE = 0.2 -- Actualizar cada 0.2 segundos (5 veces por segundo)

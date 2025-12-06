@@ -16,7 +16,7 @@ local function tipeoTexto(label,textoCompleto)
 	for i = 1, #textoCompleto do
 		label.Text = textoCompleto:sub(1, i)
 
-		wait(.06)
+		wait(.015)
 	end
 end
 
@@ -64,6 +64,8 @@ local function JoinGuia(gui,board,tipo)
 	
 	if tipo == "Desplazar" then
 		tipeoTexto(gui.Frame.Texto,"Desplaza los datos del cliente al informe en el  campo correspondiente.")
+	else 
+		tipeoTexto(gui.Frame.Texto,"Recoger documentos y/o chips atras y entregar en el modulo")
 	end
  	
 end
@@ -159,8 +161,17 @@ local cronometro = script.Parent:WaitForChild("Cronometro"):WaitForChild("Main")
 			end)
 		end)
 	elseif mode == "DETENER" then
+		
 		DetenerCronometro()
+		local BoardsFolder = script.Parent:WaitForChild("Boards")
 		local modulo_number,puntos = values[1],values[2]
+
+		local OpcionesGUI = BoardsFolder:FindFirstChild("Opciones")
+		local GuiaGUI = BoardsFolder:FindFirstChild("Guia")
+		local Module = GameFolder:WaitForChild("Modulos")["Modulo"..modulo_number] 
+		local OptionsBoard = Module:WaitForChild("BoardOpciones")
+		EndGuia(GuiaGUI,OptionsBoard,"ATRAS")
+
 
 		task.spawn(function()
 			task.wait(.5)
@@ -469,7 +480,10 @@ local cronometro = script.Parent:WaitForChild("Cronometro"):WaitForChild("Main")
 			hoja.ENTREGAR.Activated:Connect(function()
 				EndGuia(GuiaGUI,OptionsBoard,"Desplazar")
 
-				 
+				 delay(0.6,function()
+					JoinGuia(GuiaGUI,OptionsBoard,"ATRAS")
+
+				 end)
 				
 				
 				hoja.ENTREGAR:Destroy()
@@ -501,6 +515,8 @@ local cronometro = script.Parent:WaitForChild("Cronometro"):WaitForChild("Main")
 					num = modulo_number,
 					tipo = opcion_cliente,
 				})
+				
+				 
 			end)
 			 
 			

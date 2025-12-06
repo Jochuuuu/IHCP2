@@ -12,6 +12,8 @@ local randomavatar = require(script.RandomAvatar)
 local GameFolder = workspace:WaitForChild("Game")
 local Eventos = ReplicatedStorage:WaitForChild("Eventos")
 local GuideEvent = Eventos:WaitForChild("Guide")
+local LuzPart =require(Structures:WaitForChild("Luz"))
+local resumenpart = GameFolder:WaitForChild("Resumen")
 
 local Game = {}
 Game.__index = Game
@@ -25,6 +27,16 @@ function Game.new(workers)
 	self.clientQueue = queue.new({ mode = "max" })
 	self.clientCounter = 0
 	self.set = RandomSet.new()
+	self.luces = {}
+
+	local lucesFolder = workspace:FindFirstChild("Luces")
+	if lucesFolder then
+		for _, part in pairs(lucesFolder:GetChildren()) do
+			if part:IsA("BasePart") then
+				table.insert(self.luces, LuzPart.new(part, true))  
+			end
+		end
+  	end
 	
 	for i = 1, 7 do
 		self.set:insert(i)
@@ -34,19 +46,78 @@ function Game.new(workers)
 		{},{},{}
 	}
 	
+	resumenpart.Position = Vector3.new(-19.83, -5, 8.276)
 	
 	local grabfolder = workspace:FindFirstChild("GrabParts")
 	
  
+	-- Valores base (Día 1)
+	self.baseClientSpawnInterval = 40  -- 20 segundos entre clientes
+	self.baseDayDuration = 250         -- 5 minutos (300s)
+	self.baseIntermissionTime = 50     -- 1 minuto
+
+	-- Límites mínimos (no puede bajar más de esto)
+	self.minClientSpawnInterval = 8   -- Mínimo 8 segundos entre clientes
+	self.minDayDuration = 180          -- Mínimo 3 minutos
+	self.minIntermissionTime = 30      -- Mínimo 30 segundos
+
+	self.spawnIntervalDecrease = 2     -- Reduce 2 segundos por día
+	self.dayDurationIncrease = 30      -- Aumenta 30 segundos por día
 
 	-- Control del juego
 	self.isRunning = false
-	self.clientSpawnInterval = 15
-	self.dayDuration = 60 
+	self.clientSpawnInterval = 40  -- Tiempo base entre clientes
+	self.dayDuration = 250      -- 5 minutos por día
+	self.intermissionTime = 50     -- 1 minuto de intermisión
 	self.Intermission = true
 	self.queueSystem= QueueSystem.new(workspace.Ticket.Paths)
-
+	self.dayClientsSpawned = 0
+	self.dayClientsAttended = 0
+	
+	self.dayChipsEntregados = 0
+	self.dayInformesEntregados = 0
+	self.dayDerivacionesEntregadas = 0
+	
 	return self
+end
+
+
+-- ✅ NUEVA FUNCIÓN: Calcular dificultad según el día
+function Game:UpdateDifficultyForDay()
+	-- Calcular nuevo intervalo de spawn (más rápido cada día)
+	local newSpawnInterval = self.baseClientSpawnInterval - ((self.currentDay - 1) * self.spawnIntervalDecrease)
+	self.clientSpawnInterval = math.max(newSpawnInterval, self.minClientSpawnInterval)
+
+	-- Calcular nueva duración del día (más largo cada día)
+	local newDayDuration = self.baseDayDuration + ((self.currentDay - 1) * self.dayDurationIncrease)
+	self.dayDuration = math.max(newDayDuration, self.minDayDuration)
+
+	-- Intermisión se mantiene constante (o puedes variarla también)
+	-- self.intermissionTime = self.baseIntermissionTime
+
+	print("🎚️  DIFICULTAD DÍA " .. self.currentDay)
+	print("   ⏱️  Duración día: " .. self.dayDuration .. "s")
+	print("   🔄 Spawn cada: " .. string.format("%.1f", self.clientSpawnInterval) .. "s")
+	print("   📊 Clientes estimados: ~" .. math.floor(self.dayDuration / self.clientSpawnInterval))
+end
+
+
+function Game:ApagarLuces()
+	for _, luz in pairs(self.luces) do
+		luz:Apagar()
+	end
+end
+
+function Game:EncenderLuces()
+	for _, luz in pairs(self.luces) do
+		luz:Encender()
+	end
+end
+
+function Game:ToggleLuces()
+	for _, luz in pairs(self.luces) do
+		luz:Toggle()
+	end
 end
 
 function Game:GetAvalaibleModule(numbers)
@@ -80,7 +151,9 @@ end
 
 function Game:Takeseat(char,num)
 	
-	PathfindingModule.MoveTo(char, workspace.Plats:FindFirstChild("Seat"..num))
+	local encontrar_waypoints_manuales = workspace.PathsCon:FindFirstChild("Inicido-"..num)
+	if not encontrar_waypoints_manuales then encontrar_waypoints_manuales = workspace.Plats:FindFirstChild("Seat"..num) end 
+	PathfindingModule.MoveTo(char, encontrar_waypoints_manuales)
 
 	
 end
@@ -99,7 +172,8 @@ function Game:spawnClients()
 		
 		-- Crear y añadir cliente a la cola
 		self.clientCounter = self.clientCounter + 1
-		
+		self.dayClientsSpawned = self.dayClientsSpawned + 1  
+
 		local char = randomavatar.random() 
 		char.Parent = workspace
 		char.PrimaryPart.CFrame = workspace.npcspawn.CFrame
@@ -334,7 +408,21 @@ end
 
 
 
+ function Game:SendClientToExit(client, passDerivacion)
+	task.spawn(function()
+		if passDerivacion then
+			PathfindingModule.MoveTo(client.char, workspace.Plats:FindFirstChild("Derivacion"))
+			task.wait(1.5)
+		end
+		PathfindingModule.MoveTo(client.char, workspace.Plats:FindFirstChild("Salida"))
+		task.wait(0.5)
 
+		-- Destruir de forma segura
+		if client.char and client.char.Parent then
+			client.char:Destroy()
+		end
+	end)
+end
 
 function Game:EntregarCliente(player,datos)
 	
@@ -343,7 +431,16 @@ function Game:EntregarCliente(player,datos)
 	
 	local cli = self.Modulos[tonumber(num)][2]
 	
+	self.dayClientsAttended = self.dayClientsAttended + 1  -- ✅ Solo día
 
+	if tipo == "CHIP" then
+		self.dayChipsEntregados = self.dayChipsEntregados + 1
+	elseif tipo == "INFORME" then
+		self.dayInformesEntregados = self.dayInformesEntregados + 1
+	elseif tipo == "DERIVACION" then
+		self.dayDerivacionesEntregadas = self.dayDerivacionesEntregadas + 1
+	end
+	
 	if tipo == "DERIVACION" then
 		cli.chat:Destroy()
 		self:PushNext()
@@ -356,10 +453,13 @@ function Game:EntregarCliente(player,datos)
 
 		self.Modulos[tonumber(num)] = {}
 
-		PathfindingModule.MoveTo(cli.char, workspace.Plats:FindFirstChild("Derivacion"))
-		task.wait(1.5)
-     	PathfindingModule.MoveTo(cli.char, workspace.Plats:FindFirstChild("Salida"))
-		cli.char:Destroy()
+		self:SendClientToExit(cli, true)  -- true = pasó por derivación
+
+
+		--PathfindingModule.MoveTo(cli.char, workspace.Plats:FindFirstChild("Derivacion"))
+		--task.wait(1.5)
+     	--PathfindingModule.MoveTo(cli.char, workspace.Plats:FindFirstChild("Salida"))
+		--cli.char:Destroy()
 		
 		
 		return
@@ -424,6 +524,7 @@ function Game:EntregarCliente(player,datos)
 		
 		
 		spawn(function()
+			
 			if tipo == "INFORME" then
 				PathfindingModule.MoveTo(cli.char, workspace.Plats:FindFirstChild("Derivacion"))
 				task.wait(1.5)
@@ -552,9 +653,16 @@ end
 
 function Game:DayStart()
 	print("Iniciando dia ",self.currentDay)
-	
+	self:UpdateDifficultyForDay()
+
 	while self.isRunning do
 		self.Intermission = false
+		self.dayClientsSpawned = 0
+		self.dayClientsAttended = 0
+		
+		self.dayChipsEntregados = 0
+		self.dayInformesEntregados = 0
+		self.dayDerivacionesEntregadas = 0
 		
 		local dayDuration = self:getDayDuration()
 		local spawnInterval = self:getClientSpawnInterval()
@@ -578,19 +686,207 @@ function Game:DayStart()
 		end
 		
 		self:StopSpawningClients()
+		local Lighting = game:GetService("Lighting")
+		local originalBrightness = Lighting.Brightness
+		local originalClockTime = Lighting.ClockTime
+
+		print("🌙 Día terminado - Oscureciendo...")
+		tw:Create(Lighting, TweenInfo.new(2), {
+			Brightness = 0.5,
+			ClockTime = 19  -- Atardecer
+		}):Play()
 		
-		print("Dia termiando !!!")
+		self:ClearRemainingClients()
+		
+ 		local waitingForModules = true
+		while waitingForModules do
+			waitingForModules = false
+
+			for i = 1, 3 do
+				if self.Modulos[i][1] ~= nil then
+					waitingForModules = true
+					break
+				end
+			end
+
+			if waitingForModules then
+				task.wait(1)
+			end
+		end
+		
+		print("💡 Apagando luces...")
+		self:ApagarLuces()
+
+		tw:Create(Lighting, TweenInfo.new(2), {
+			Brightness = 0,
+			ClockTime = 0  -- Medianoche total
+		}):Play()
+
+		task.wait(2)
+		
+ 		
+		local efficiency = 0
+		if self.dayClientsSpawned > 0 then
+			efficiency = (self.dayClientsAttended / self.dayClientsSpawned) * 100
+		end
+		
+
+		print("\n╔═══════════════════════════════════════╗")
+		print("║      ESTADÍSTICAS DÍA " .. self.currentDay .. "           ║")
+		print("╠═══════════════════════════════════════╣")
+		print("║  👥 Clientes: " .. self.dayClientsSpawned)
+		print("║  ✅ Atendidos: " .. self.dayClientsAttended)
+		print("║  ❌ Perdidos: " .. (self.dayClientsSpawned - self.dayClientsAttended))
+		print("║  📊 Eficiencia: " .. string.format("%.1f%%", efficiency))
+		print("╠═══════════════════════════════════════╣")
+		print("║  📱 CHIPs: " .. self.dayChipsEntregados)
+		print("║  📄 INFORMEs: " .. self.dayInformesEntregados)
+		print("║  ➡️  DERIVACIONEs: " .. self.dayDerivacionesEntregadas)
+		print("╚═══════════════════════════════════════╝")
+
+		
+		local efficiency = 0
+		
+		if self.dayClientsSpawned > 0 then
+			efficiency = (self.dayClientsAttended / self.dayClientsSpawned) * 100
+		end
+
+		print("\n╔═══════════════════════════════════════╗")
+		print("║      ESTADÍSTICAS DÍA " .. self.currentDay .. "           ║")
+		print("╠═══════════════════════════════════════╣")
+		print("║  👥 Clientes: " .. self.dayClientsSpawned)
+		print("║  ✅ Atendidos: " .. self.dayClientsAttended)
+		print("║  ❌ Perdidos: " .. (self.dayClientsSpawned - self.dayClientsAttended))
+		print("║  📊 Eficiencia: " .. string.format("%.1f%%", efficiency))
+		print("╠═══════════════════════════════════════╣")
+		print("║  📱 CHIPs: " .. self.dayChipsEntregados)
+		print("║  📄 INFORMEs: " .. self.dayInformesEntregados)
+		print("║  ➡️  DERIVACIONEs: " .. self.dayDerivacionesEntregadas)
+		print("╚═══════════════════════════════════════╝")
+
+ 		local gui = resumenpart.Gui.Frame
+
+ 		local barraProgress = self.dayClientsAttended / math.max(self.dayClientsSpawned, 1)
+		
+		gui.TChips.Text = self.dayChipsEntregados .. " "
+		gui.TInformes.Text = self.dayInformesEntregados .. " "
+		gui.TDerivaciones.Text = self.dayDerivacionesEntregadas .. " "
+		gui.TClientes.Text = 0 .. " / " .. 0
+
+
+
+		tw:Create(resumenpart, TweenInfo.new(0.9, Enum.EasingStyle.Linear), {
+			Position = Vector3.new(-19.83, 8, 8.276)
+		}):Play()
+		
+		task.wait(0.9)  -- Esperar a que suba
+		gui.Barra.BarraIn:TweenSize(
+			UDim2.new(barraProgress, 0, 1, 0),
+			Enum.EasingDirection.Out,
+			Enum.EasingStyle.Quad,
+			0.9,
+			true
+		)
+		gui.TClientes.Text = self.dayClientsAttended .. " / " .. self.dayClientsSpawned
+
 		self.currentDay = self.currentDay + 1
 		self.Intermission = true 
+
+		-- INTERMISIÓN CON EFECTOS
 		if self.Intermission then
-			print("\n⏸️ Intermisión de 10 segundos...")
-			task.wait(10)
+			tw:Create(resumenpart, TweenInfo.new(0.9, Enum.EasingStyle.Linear), {
+				Position = Vector3.new(-19.83, 8, 8.276)
+			}):Play()
+			
+			self:RunIntermission()
+			
+			
 		end
 		
 		-- detendria esa funcion task.spawn
 		
 	end
 end
+
+-- ✅ NUEVA FUNCIÓN: Limpiar clientes que quedaron sin atender
+function Game:ClearRemainingClients()
+	print("🧹 Limpiando clientes no atendidos...")
+
+	-- Clientes en cola
+	while not self.clientQueue:isEmpty() do
+		local cli = self.clientQueue:pop()
+		if cli and cli.char then
+			if cli.tag then cli.tag:Destroy() end
+			if cli.chat then cli.chat:Destroy() end
+			self:SendClientToExit(cli, false)
+		end
+	end
+
+	-- Clientes en sala de espera
+	local remainingInQueue = self.queueSystem:GetQueueCount()
+	for i = 1, remainingInQueue do
+		local cli = self.queueSystem:GetFirstClient()
+		if cli and cli.char then
+			if cli.tag then cli.tag:Destroy() end
+			self:SendClientToExit(cli, false)
+			self.queueSystem:RemoveFirst()
+		end
+	end
+
+	-- Limpiar asientos ocupados
+	self.set = RandomSet.new()
+	for i = 1, 7 do
+		self.set:insert(i)
+	end
+
+	task.wait(3)  -- Dar tiempo a que salgan todos
+	print("✅ Limpieza completada")
+end
+
+function Game:RunIntermission()
+	local Lighting = game:GetService("Lighting")
+
+	print("\n⏸️ INTERMISIÓN - " .. self.intermissionTime .. " segundos...")
+
+	-- Mostrar mensaje de intermisión
+	print("╔════════════════════════════════════╗")
+	print("║     FIN DEL DÍA " .. (self.currentDay - 1) .. "              ║")
+	print("║     PREPARANDO DÍA " .. self.currentDay .. "...        ║")
+	print("╚════════════════════════════════════╝")
+
+	local gui = resumenpart.Gui.Frame
+	local intermissionStart = tick()
+	local totalTime = self.intermissionTime - 2  -- Restar los 2 segundos finales
+
+	-- ✅ Actualizar Time con countdown de intermisión
+	while tick() - intermissionStart < totalTime do
+		local timeLeft = totalTime - (tick() - intermissionStart)
+		local minutes = math.floor(timeLeft / 60)
+		local seconds = math.floor(timeLeft % 60)
+		gui.Time.Text = string.format("%02d:%02d", minutes, seconds)
+
+		-- Print cada 10 segundos
+		if math.floor(timeLeft) % 10 == 0 and timeLeft > 0 then
+			print("⏱️  Siguiente día en " .. math.floor(timeLeft) .. " segundos...")
+		end
+
+		task.wait(1)
+	end
+
+	-- Encender luces
+	self:EncenderLuces()
+	tw:Create(Lighting, TweenInfo.new(3), {
+		Brightness = 1,
+		ClockTime = 8  -- Mañana
+	}):Play()
+
+	gui.Time.Text = "00:00"
+
+	task.wait(3)
+
+	print("🌅 ¡DÍA " .. self.currentDay .. " COMIENZA!")
+end
+
 
 function Game:start()
 	if self.isRunning then
@@ -618,7 +914,9 @@ function Game:start()
 			local Excl : BasePart = v:FindFirstChild("EXC")
 
 			click.MouseClick:Connect(function(player)
-				
+				if self.Intermission then
+ 					return
+				end
 				if not db then return end 
 				print("atendiendo pera")
 				db = false 
